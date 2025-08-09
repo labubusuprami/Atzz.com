@@ -1,119 +1,101 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Loja de Livros - Arthur Martin</title>
-<style>
-  body { font-family: Arial, sans-serif; margin: 0; padding: 10px; background: #f0f0f0; }
-  h1, h2 { color: #2d6cdf; }
-  form, .book { background: white; padding: 10px; margin-bottom: 15px; border-radius: 5px; }
-  input, textarea, button { width: 100%; margin: 5px 0; padding: 8px; }
-  button { background: #2d6cdf; color: white; border: none; border-radius: 4px; }
-  .book img { max-width: 100%; height: 150px; object-fit: cover; border-radius: 4px; }
-  .book-title { font-weight: bold; font-size: 1.2em; margin: 5px 0; color: #2d6cdf; }
-  .book-price { color: green; font-weight: bold; margin-bottom: 5px; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Resumo Amazon Kindle Direct Publishing (KDP)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background-color: #f9f9f9;
+      color: #333;
+      line-height: 1.6;
+    }
+    header {
+      background-color: #2d6cdf;
+      color: white;
+      padding: 1.5em 1em;
+      text-align: center;
+    }
+    main {
+      max-width: 900px;
+      margin: 2em auto;
+      padding: 0 1em;
+    }
+    h1 {
+      margin-bottom: 0.5em;
+    }
+    h2 {
+      color: #2d6cdf;
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+    }
+    section {
+      margin-bottom: 1.5em;
+      background: white;
+      padding: 1em 1.5em;
+      border-radius: 6px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    footer {
+      text-align: center;
+      padding: 1em;
+      background: #2d6cdf;
+      color: white;
+      margin-top: 3em;
+    }
+    a {
+      color: #ffd;
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
 
-<h1>Minha Loja de Livros</h1>
+<header>
+  <h1>Resumo Amazon Kindle Direct Publishing (KDP)</h1>
+</header>
 
-<form id="bookForm">
-  <input type="hidden" id="bookId" />
-  <input type="text" id="title" placeholder="Título do livro" required />
-  <textarea id="description" placeholder="Descrição do livro" rows="3" required></textarea>
-  <input type="number" id="price" placeholder="Preço (R$)" step="0.01" min="0" required />
-  <input type="url" id="image" placeholder="URL da imagem da capa" required />
-  <button type="submit">Salvar Livro</button>
-</form>
+<main>
+  <section>
+    <h2>Introdução</h2>
+    <p>O <strong>Amazon KDP</strong> é a plataforma oficial da Amazon para autores independentes e editoras publicarem seus livros digitais (eBooks) e impressos (livros físicos sob demanda). É uma das maiores e mais populares plataformas do mundo para autopublicação.</p>
+  </section>
 
-<div id="booksContainer"></div>
+  <section>
+    <h2>Principais funcionalidades</h2>
+    <ul>
+      <li><strong>Publicação fácil e rápida:</strong> envie arquivos de livro direto na plataforma, publicando eBooks para Kindle e livros impressos.</li>
+      <li><strong>Controle total sobre o conteúdo:</strong> mantenha direitos autorais, edite título, descrição, categorias e palavras-chave a qualquer momento.</li>
+      <li><strong>Personalização da página do livro:</strong> adicione capa, descrição, informações do autor e pré-visualização.</li>
+      <li><strong>Definição de preços e royalties:</strong> escolha preço e receba até 70% de royalties sobre vendas.</li>
+      <li><strong>Distribuição global:</strong> alcance milhões de clientes em vários países.</li>
+      <li><strong>Ferramentas de marketing:</strong> promoções, descontos e programas como Kindle Unlimited.</li>
+      <li><strong>Relatórios e estatísticas:</strong> acompanhe vendas e ganhos com painéis claros.</li>
+      <li><strong>Livros impressos sob demanda:</strong> produção somente quando há pedido, sem estoque.</li>
+    </ul>
+  </section>
 
-<script>
-  let books = JSON.parse(localStorage.getItem('books') || '[]');
+  <section>
+    <h2>Como criar um site inspirado no KDP</h2>
+    <p>Para criar um site parecido, seu sistema precisaria:</p>
+    <ul>
+      <li>Painel para autores cadastrarem e editarem livros</li>
+      <li>Personalização de título, descrição, capa e preço</li>
+      <li>Publicação de livros digitais e impressão sob demanda</li>
+      <li>Página para clientes navegarem, lerem prévias e comprarem</li>
+      <li>Sistema de pagamentos e distribuição</li>
+      <li>Painel com relatórios para autores</li>
+      <li>Ferramentas para promoções e assinaturas</li>
+      <li>Controle de direitos autorais e políticas de uso</li>
+    </ul>
+  </section>
+</main>
 
-  const form = document.getElementById('bookForm');
-  const booksContainer = document.getElementById('booksContainer');
-
-  function saveBooks() {
-    localStorage.setItem('books', JSON.stringify(books));
-  }
-
-  function renderBooks() {
-    booksContainer.innerHTML = '';
-    if (books.length === 0) {
-      booksContainer.innerHTML = '<p>Nenhum livro criado.</p>';
-      return;
-    }
-    books.forEach(book => {
-      const div = document.createElement('div');
-      div.className = 'book';
-      div.innerHTML = `
-        <img src="${book.image}" alt="${book.title}" />
-        <div class="book-title">${book.title}</div>
-        <div>${book.description}</div>
-        <div class="book-price">R$ ${parseFloat(book.price).toFixed(2)}</div>
-        <button onclick="editBook('${book.id}')">Editar</button>
-        <button onclick="deleteBook('${book.id}')">Excluir</button>
-      `;
-      booksContainer.appendChild(div);
-    });
-  }
-
-  function generateId() {
-    return '_' + Math.random().toString(36).substr(2, 9);
-  }
-
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    const id = document.getElementById('bookId').value;
-    const title = document.getElementById('title').value.trim();
-    const description = document.getElementById('description').value.trim();
-    const price = document.getElementById('price').value;
-    const image = document.getElementById('image').value.trim();
-
-    if (!title || !description || !price || !image) {
-      alert('Por favor, preencha todos os campos.');
-      return;
-    }
-
-    if (id) {
-      // Editar livro existente
-      const index = books.findIndex(b => b.id === id);
-      if (index !== -1) {
-        books[index] = { id, title, description, price, image };
-      }
-    } else {
-      // Adicionar novo livro
-      books.push({ id: generateId(), title, description, price, image });
-    }
-
-    saveBooks();
-    renderBooks();
-    form.reset();
-    document.getElementById('bookId').value = '';
-  });
-
-  window.editBook = function(id) {
-    const book = books.find(b => b.id === id);
-    if (!book) return;
-    document.getElementById('bookId').value = book.id;
-    document.getElementById('title').value = book.title;
-    document.getElementById('description').value = book.description;
-    document.getElementById('price').value = book.price;
-    document.getElementById('image').value = book.image;
-  }
-
-  window.deleteBook = function(id) {
-    if (!confirm('Tem certeza que deseja excluir este livro?')) return;
-    books = books.filter(b => b.id !== id);
-    saveBooks();
-    renderBooks();
-  }
-
-  renderBooks();
-</script>
+<footer>
+  <p>Contato: <a href="mailto:arthur.martin@escola.pr.gov.br">arthur.martin@escola.pr.gov.br</a> | Instagram: <a href="https://www.instagram.com/arthur_santos_martin?igsh=bzBsNXQzdnpwMTJr" target="_blank">@arthur_santos_martin</a></p>
+</footer>
 
 </body>
 </html>
